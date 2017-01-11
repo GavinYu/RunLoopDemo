@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F46AF1B91D54613000351F2E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46AF1B81D54613000351F2E /* CoreTelephony.framework */; };
+		F4504D911E1204CD00392072 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4504D901E1204CD00392072 /* CoreTelephony.framework */; };
 		F4700D851D13C58500143B43 /* Flying.m in Sources */ = {isa = PBXBuildFile; fileRef = F4700D841D13C58500143B43 /* Flying.m */; };
 		F48C2E331CFC1FC600F2D24F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F48C2E321CFC1FC600F2D24F /* main.m */; };
 		F48C2E361CFC1FC600F2D24F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F48C2E351CFC1FC600F2D24F /* AppDelegate.m */; };
@@ -38,7 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F46AF1B81D54613000351F2E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		F4504D901E1204CD00392072 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		F4504F451E120FA700392072 /* CFRunLoopRef.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CFRunLoopRef.xcodeproj; path = CFRunLoopRef/CFRunLoopRef.xcodeproj; sourceTree = "<group>"; };
 		F4700D831D13C58500143B43 /* Flying.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flying.h; sourceTree = "<group>"; };
 		F4700D841D13C58500143B43 /* Flying.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Flying.m; sourceTree = "<group>"; };
 		F48C2E2E1CFC1FC600F2D24F /* RunLoopDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunLoopDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F46AF1B91D54613000351F2E /* CoreTelephony.framework in Frameworks */,
+				F4504D911E1204CD00392072 /* CoreTelephony.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,14 +87,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F4504D8F1E1204CD00392072 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F4504D901E1204CD00392072 /* CoreTelephony.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F4504F461E120FA700392072 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F48C2E251CFC1FC600F2D24F = {
 			isa = PBXGroup;
 			children = (
-				F46AF1B81D54613000351F2E /* CoreTelephony.framework */,
+				F4504F451E120FA700392072 /* CFRunLoopRef.xcodeproj */,
 				F48C2E301CFC1FC600F2D24F /* RunLoopDemo */,
 				F48C2E4D1CFC1FC600F2D24F /* RunLoopDemoTests */,
 				F48C2E581CFC1FC600F2D24F /* RunLoopDemoUITests */,
 				F48C2E2F1CFC1FC600F2D24F /* Products */,
+				F4504D8F1E1204CD00392072 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -242,6 +259,12 @@
 			mainGroup = F48C2E251CFC1FC600F2D24F;
 			productRefGroup = F48C2E2F1CFC1FC600F2D24F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F4504F461E120FA700392072 /* Products */;
+					ProjectRef = F4504F451E120FA700392072 /* CFRunLoopRef.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				F48C2E2D1CFC1FC600F2D24F /* RunLoopDemo */,

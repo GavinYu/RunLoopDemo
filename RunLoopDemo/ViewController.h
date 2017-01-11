@@ -11,6 +11,8 @@
 @interface ViewController : UIViewController
 
 - (IBAction)clickAddObserverButton:(UIButton *)sender;
+- (IBAction)clickAddTimerButton:(UIButton *)sender;
+- (IBAction)clickAddSource:(id)sender;
 
 @end
 

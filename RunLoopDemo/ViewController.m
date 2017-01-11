@@ -15,7 +15,9 @@
     CFRunLoopObserverCallBack myRunLoopObserver;
     Flying *_fly;
     NSTimer *_runLoopTimer;
+    BOOL pageStillLoading;
 }
+@property (weak, nonatomic) IBOutlet UITextView *testTextView;
 
 @end
 
@@ -23,14 +25,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    pageStillLoading = YES;
     // Do any additional setup after loading the view, typically from a nib.
     _fly = [[Flying alloc] init];
     _fly.delegate = self;
-    
-    [self testFly];
-    
-//    _runLoopTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(runLoopTest) userInfo:nil repeats:YES];
+
 }
 
 
@@ -92,8 +91,50 @@
 }
 
 
-
+#pragma mark 给当前线程Run Loop 添加观察者
 - (IBAction)clickAddObserverButton:(UIButton *)sender {
-    [self performSelector:@selector(runLoopTest) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(runLoopTest) withObject:nil afterDelay:5.0];
+}
+
+#pragma mark 给当前线程Run Loop 添加Timer
+- (IBAction)clickAddTimerButton:(UIButton *)sender {
+    __weak __typeof(self) weakSelf = self;
+    CFRunLoopRef currentRunLoop = CFRunLoopGetCurrent();
+    
+    CFAbsoluteTime fireDate = CFAbsoluteTimeGetCurrent();
+    CFRunLoopTimerRef runLoopTimer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, fireDate, 2.0f, 0, 0, ^(CFRunLoopTimerRef timer) {
+        [weakSelf testFly];
+    });
+    
+    // 1、但是这种模式下如果拖拽界面，runloop会自动进入UITrackingMode,优先于定时器追踪模式
+//    CFRunLoopAddTimer(currentRunLoop, runLoopTimer, kCFRunLoopDefaultMode);
+    
+    // 2、还有一种runloop的mode，占位运行模式
+    // 就可以无论是界面追踪还是普通模式都可以运行
+    /**
+     NSTimer的问题，NSTimer是runloop的一个触发源，由于NSTimer是添加到runloop中使用的，所以如果只添加到default模式，会导致拖拽界面的时候runloop进入界面跟踪模式而定时器暂停运行，不拖拽又恢复的问题，这时候就应该使用runloop的NSRunLoopCommonModes模式，能够让定时器在runloop两种模式切换时也不受影响。
+     */
+    CFRunLoopAddTimer(currentRunLoop, runLoopTimer, kCFRunLoopCommonModes);
+}
+
+- (IBAction)clickAddSource:(id)sender {
+    //1、基于端口的输入源
+    
+}
+
+
+//MARK:基于端口的输入源
+- (void)createPortSource {
+    CFMessagePortCallBack myCallbackFunc;
+    CFMessagePortRef port = CFMessagePortCreateLocal(kCFAllocatorDefault, CFSTR("com.someport"), myCallbackFunc, NULL, NULL);
+    CFRunLoopSourceRef source = CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, port, 0);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
+    
+    while (pageStillLoading) {
+        CFRunLoopRun();
+    }
+    
+    CFRunLoopRemoveSource(CFRunLoopGetCurrent(), source, kCFRunLoopDefaultMode);
+    CFRelease(source);
 }
 @end
